@@ -1,9 +1,4 @@
-javadoc
-*~
-*.class
-.*swp
 *txt.gz
 *txt
 *html
 config.hash
-
