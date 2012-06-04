@@ -2,6 +2,7 @@ require 'util/http_verify_none.rb'
 require 'net/https'
 require 'uri'
 require 'cgi'
+require 'yaml'
 
 class Autoingestion
   ITUNES_URL = "https://reportingitc.apple.com/autoingestion.tft"
@@ -35,7 +36,7 @@ class Autoingestion
 
     if response['filename'] != nil
       filename = response['filename']
-      f = File.new(filename, "w")
+      f = File.new("output/" + filename, "w")
       f.write(response.body)
       f.close
       puts "File Downloaded Successfully (#{filename})"
@@ -53,11 +54,11 @@ end
 autoingestor = Autoingestion.new
 yesterday = (Time.new - 24*60*60).strftime("%Y%m%d")
 
-if File.exists?("config.hash")
-  config = eval(File.new("config.hash").read())
-  autoingestor.username = config["username"]
-  autoingestor.password = config["password"]
-  autoingestor.vendor_number = config["vendor_number"]
+if File.exists?("config.yml")
+  config = YAML::load(File.open("config.yml"))
+  autoingestor.username = config['username']
+  autoingestor.password = config['password']
+  autoingestor.vendor_number = config['vendor_number']
 else
   print "iTunes Connect email address:             "
   autoingestor.username = gets.strip!
