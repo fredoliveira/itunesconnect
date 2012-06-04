@@ -29,10 +29,10 @@ def main
     autoingestor.report_date = gets.strip!
   end
 
-  autoingestor.type_of_report = "Sales"   if autoingestor.type_of_report.empty?
-  autoingestor.date_type      = "Daily"   if autoingestor.date_type.empty?
-  autoingestor.report_type    = "Summary" if autoingestor.report_type.empty?
-  autoingestor.report_date    = yesterday if autoingestor.report_date.empty?
+  autoingestor.type_of_report = "Sales"   if autoingestor.type_of_report.nil?
+  autoingestor.date_type      = "Daily"   if autoingestor.date_type.nil?
+  autoingestor.report_type    = "Summary" if autoingestor.report_type.nil?
+  autoingestor.report_date    = yesterday if autoingestor.report_date.nil?
 
   autoingestor.perform_request
 end
