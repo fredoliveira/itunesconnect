@@ -63,7 +63,12 @@ else
   print "iTunes Connect email address:             "
   autoingestor.username = gets.strip!
   print "iTunes Connect password:                  "
-  autoingestor.password = gets.strip!
+  begin  # Don't show the user's password in the console
+    system("stty -echo")
+    autoingestor.password = gets.strip!
+  ensure
+    system("stty echo")
+  end
   print "Vendor number:                            "
   autoingestor.vendor_number = gets.strip!
   print "Type of report:                [Sales]    "
