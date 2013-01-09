@@ -2,7 +2,7 @@
 
 if !File.exists?("config.yml")
   puts "Please fill out config.yml before using this tool."
-  return
+  exit 1
 end
 
 puts "Downloading all reports.."
