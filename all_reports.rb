@@ -1,5 +1,5 @@
-if !File.exists?("config.hash")
-  puts "Please fill out config.hash before using this tool."
+if !File.exists?("config.yml")
+  puts "Please fill out config.yml before using this tool."
   return
 end
 
