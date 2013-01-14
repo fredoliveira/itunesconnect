@@ -50,12 +50,14 @@ class ITunesConnect::Client
       File.open(File.join(output_dir, filename), "wb") do |f|
         f.write(response.body)
       end
+
+      ITunesConnect.logger.info "File Downloaded Successfully (#{filename})"
     elsif response['errormsg'] != nil
-      puts response['errormsg']
+      ITunesConnect.logger.error response['errormsg']
     else
-      puts "No recognized response, dumping headers.."
+      ITunesConnect.logger.error "No recognized response, dumping headers.."
       response.each_header do | key, value |
-        puts "#{key}: #{value}"
+        ITunesConnect.logger.error "-> #{key}: #{value}"
       end
     end
   end
