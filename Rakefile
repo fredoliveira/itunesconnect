@@ -10,5 +10,3 @@ task :rspec do
   puts ":rspec.."
   system("rspec autoingestion_spec.rb")
 end
-
-
