@@ -11,6 +11,14 @@ class ITunesConnect::Client
   attr_accessor :report_type
   attr_accessor :report_date
 
+  # Allow the user to specify where the parsed files should go
+  attr_accessor :output_dir
+
+  def initialize
+    # Default the output dir to 'output'
+    @output_dir = "output"
+  end
+
   def perform_request
     uri = URI.parse(ITunesConnect::ITUNES_URL)
     http = Net::HTTP.new(uri.host, uri.port)
@@ -33,10 +41,15 @@ class ITunesConnect::Client
 
     if response['filename'] != nil
       filename = response['filename']
-      f = File.new("output/" + filename, "w")
-      f.write(response.body)
-      f.close
-      puts "File Downloaded Successfully (#{filename})"
+
+      # Create the output dir if needed
+      unless File.exists?(output_dir)
+        Dir.mkdir(output_dir)
+      end
+
+      File.open(File.join(output_dir, filename), "wb") do |f|
+        f.write(response.body)
+      end
     elsif response['errormsg'] != nil
       puts response['errormsg']
     else
